@@ -43,7 +43,8 @@ export type MutationDeletePostArgs = {
 
 
 export type MutationLoginArgs = {
-  userCredentials: UserCredentials;
+  password: Scalars['String'];
+  usernameOrEmail: Scalars['String'];
 };
 
 
@@ -82,11 +83,13 @@ export type User = {
   __typename?: 'User';
   _id: Scalars['Float'];
   createdAt: Scalars['String'];
+  email: Scalars['String'];
   updatedAt: Scalars['String'];
   username: Scalars['String'];
 };
 
 export type UserCredentials = {
+  email: Scalars['String'];
   password: Scalars['String'];
   username: Scalars['String'];
 };
@@ -100,7 +103,8 @@ export type UserResponse = {
 export type RegularUserFragment = { __typename?: 'User', _id: number, username: string };
 
 export type LoginMutationVariables = Exact<{
-  userCredentials: UserCredentials;
+  password: Scalars['String'];
+  usernameOrEmail: Scalars['String'];
 }>;
 
 
@@ -135,8 +139,8 @@ export const RegularUserFragmentDoc = gql`
 }
     `;
 export const LoginDocument = gql`
-    mutation Login($userCredentials: UserCredentials!) {
-  login(userCredentials: $userCredentials) {
+    mutation Login($password: String!, $usernameOrEmail: String!) {
+  login(password: $password, usernameOrEmail: $usernameOrEmail) {
     user {
       ...RegularUser
     }

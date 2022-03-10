@@ -17,7 +17,7 @@ const RegisterPage = () => {
   return (
     <Wrapper>
       <Formik
-        initialValues={{ username: '', password: '' }}
+        initialValues={{ username: '', password: '', email: '' }}
         onSubmit={async (values, { setErrors, resetForm }) => {
           console.log(values);
           const response = await register({ userCredentials: values });
@@ -30,9 +30,11 @@ const RegisterPage = () => {
         }}
       >
         {({ values, handleChange, isSubmitting }) => {
-          const { username, password } = values;
           return (
             <Form>
+              <Box>
+                <CustomInput name="email" placeholder="email" label="email" type="email" />
+              </Box>
               <Box>
                 <CustomInput name="username" placeholder="Username" label="Username" type="text" />
               </Box>
