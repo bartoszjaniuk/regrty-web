@@ -5,17 +5,15 @@ import theme from '../theme';
 
 function MyApp({ Component, pageProps }: any) {
   return (
-    <GraphQLProvider>
-      <ChakraProvider resetCSS theme={theme}>
-        <ColorModeProvider
-          options={{
-            useSystemColorMode: true,
-          }}
-        >
-          <Component {...pageProps} />
-        </ColorModeProvider>
-      </ChakraProvider>
-    </GraphQLProvider>
+    <ChakraProvider resetCSS theme={theme}>
+      <ColorModeProvider
+        options={{
+          useSystemColorMode: true,
+        }}
+      >
+        <Component {...pageProps} />
+      </ColorModeProvider>
+    </ChakraProvider>
   );
 }
 

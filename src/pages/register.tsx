@@ -6,6 +6,8 @@ import CustomInput from 'shared/custom-input/custom-input';
 import { useRegisterMutation } from 'generated/graphql';
 import { toErrorMap } from 'utils/toErrorMap';
 import { useRouter } from 'next/router';
+import { withUrqlClient } from 'next-urql';
+import { createUrqlClient } from 'utils/createUrqlClient';
 
 interface RegisterProps {}
 
@@ -53,6 +55,6 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default withUrqlClient(createUrqlClient)(RegisterPage);
 
 // https://www.youtube.com/watch?v=I6ypD7qv3Z8&t=239s  2:20

@@ -6,6 +6,8 @@ import CustomInput from 'shared/custom-input/custom-input';
 import { useLoginMutation } from 'generated/graphql';
 import { toErrorMap } from 'utils/toErrorMap';
 import { useRouter } from 'next/router';
+import { withUrqlClient } from 'next-urql';
+import { createUrqlClient } from 'utils/createUrqlClient';
 
 interface LoginProps {}
 
@@ -53,4 +55,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default withUrqlClient(createUrqlClient)(LoginPage);

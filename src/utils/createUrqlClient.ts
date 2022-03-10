@@ -1,19 +1,18 @@
-import { Cache, cacheExchange, QueryInput } from '@urql/exchange-graphcache';
+import { dedupExchange, fetchExchange } from '@urql/core';
+import { cacheExchange } from '@urql/exchange-graphcache';
 import {
-  LoginMutation,
   LogoutMutation,
-  MeDocument,
   MeQuery,
-  Query,
+  MeDocument,
+  LoginMutation,
   RegisterMutation,
-} from 'generated/graphql';
-import React from 'react';
-import { Provider, createClient, dedupExchange, fetchExchange } from 'urql';
+} from '../generated/graphql';
+import { customUpdateQuery } from './customUpdateQuery';
 
-const client = createClient({
+export const createUrqlClient = (ssrExchange: any) => ({
   url: 'http://localhost:5000/graphql',
   fetchOptions: {
-    credentials: 'include',
+    credentials: 'include' as const,
   },
   exchanges: [
     dedupExchange,
@@ -29,7 +28,6 @@ const client = createClient({
             );
           },
           login: (_result, args, cache, info) => {
-            // cache.updateQuery({query: MeDocument}, (data) => {} )
             customUpdateQuery<LoginMutation, MeQuery>(
               cache,
               { query: MeDocument },
@@ -64,11 +62,7 @@ const client = createClient({
         },
       },
     }),
+    ssrExchange,
     fetchExchange,
   ],
 });
-const GraphQLProvider = ({ children }: { children: JSX.Element }) => {
-  return <Provider value={client}>{children}</Provider>;
-};
-
-export default GraphQLProvider;
