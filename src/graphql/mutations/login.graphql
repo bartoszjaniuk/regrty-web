@@ -1,8 +1,7 @@
 mutation Login($userCredentials: UserCredentials!) {
   login(userCredentials: $userCredentials) {
     user {
-      _id
-      username
+      ...RegularUser
     }
     errors {
       field

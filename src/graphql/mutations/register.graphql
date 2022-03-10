@@ -1,8 +1,7 @@
 mutation Register($userCredentials: UserCredentials!) {
   register(userCredentials: $userCredentials) {
     user {
-      _id
-      username
+      ...RegularUser
     }
     errors {
       field
