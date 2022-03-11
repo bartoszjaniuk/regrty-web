@@ -1,4 +1,4 @@
-import { Box, Button } from '@chakra-ui/react';
+import { Box, Button, Flex, Link } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import React from 'react';
 import Wrapper from 'components/wrapper';
@@ -8,6 +8,7 @@ import { toErrorMap } from 'utils/toErrorMap';
 import { useRouter } from 'next/router';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from 'utils/createUrqlClient';
+import NextLink from 'next/link';
 
 interface LoginProps {}
 
@@ -30,7 +31,6 @@ const LoginPage = () => {
         }}
       >
         {({ values, handleChange, isSubmitting }) => {
-          const { usernameOrEmail, password } = values;
           return (
             <Form>
               <Box>
@@ -49,9 +49,14 @@ const LoginPage = () => {
                   type="password"
                 />
               </Box>
-              <Button mt={4} type="submit" isLoading={isSubmitting} colorScheme="purple">
-                Login
-              </Button>
+              <Flex mt={4}>
+                <Button type="submit" isLoading={isSubmitting} colorScheme="purple">
+                  Login
+                </Button>
+                <NextLink href="/forgotPassword">
+                  <Link ml={'auto'}>forgot password?</Link>
+                </NextLink>
+              </Flex>
             </Form>
           );
         }}

@@ -4,8 +4,7 @@ mutation Register($userCredentials: UserCredentials!) {
       ...RegularUser
     }
     errors {
-      field
-      message
+      ...RegularError
     }
   }
 }
