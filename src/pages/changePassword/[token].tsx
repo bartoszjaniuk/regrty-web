@@ -10,16 +10,20 @@ import CustomInput from 'shared/custom-input/custom-input';
 import { createUrqlClient } from 'utils/createUrqlClient';
 import { toErrorMap } from 'utils/toErrorMap';
 
-const ChangePassword: NextPage<{ token: string }> = ({ token }) => {
+const ChangePassword = () => {
   const [{}, resetPassword] = useResetPasswordMutation();
   const [tokenError, setTokenError] = useState('');
   const router = useRouter();
+  const token = typeof router.query.token === 'string' ? router.query.token : '';
   return (
     <Wrapper>
       <Formik
         initialValues={{ newPassword: '' }}
         onSubmit={async (values, { setErrors, resetForm }) => {
-          const response = await resetPassword({ newPassword: values.newPassword, token });
+          const response = await resetPassword({
+            newPassword: values.newPassword,
+            token,
+          });
           if (response.data?.resetPassword.errors) {
             const errorMap = toErrorMap(response.data.resetPassword.errors);
 
@@ -54,12 +58,6 @@ const ChangePassword: NextPage<{ token: string }> = ({ token }) => {
       </Formik>
     </Wrapper>
   );
-};
-
-ChangePassword.getInitialProps = ({ query }) => {
-  return {
-    token: query.token as string,
-  };
 };
 
 export default withUrqlClient(createUrqlClient)(ChangePassword);
