@@ -11,6 +11,7 @@ import {
 } from '../generated/graphql';
 import { customUpdateQuery } from './customUpdateQuery';
 import Router from 'next/router';
+import { cursorPagination } from './cursorPagination';
 
 // errorExchange will catch all errors when using graphql queries/mutations
 const errorExchange: Exchange =
@@ -76,6 +77,14 @@ export const createUrqlClient = (ssrExchange: any) => ({
               }
             );
           },
+        },
+      },
+      keys: {
+        PaginatedPosts: () => null,
+      },
+      resolvers: {
+        Query: {
+          posts: cursorPagination(),
         },
       },
     }),
